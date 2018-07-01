@@ -1,0 +1,15 @@
+.new-task-section {
+   padding:15px 30px 15px 30px;
+}
+
+.list-section {
+    text-align: left;
+}
+
+.list-section.task-item-check{
+
+}
+
+.list-section .task-item-text{
+    margin-left: 10px;
+}
