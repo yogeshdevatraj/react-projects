@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import './TodoList.css';
+import TodoTask from './TodoTask';
 
 class TodoList extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class TodoList extends Component {
                 done:false
             };
             this.state.tasks.push(newTaskRecord);
-            this.setState({tasks: this.state.tasks, newTask: null, newTask: ''});
+            this.setState({tasks: this.state.tasks, newTask: ''});
         }
     }
 
@@ -37,7 +38,7 @@ class TodoList extends Component {
     }
 
     onEntered(e) {
-        if(e.key == "Enter"){
+        if(e.key === "Enter"){
             debugger;
             this.addTask(e);
             e.preventDefault();
@@ -65,12 +66,13 @@ class TodoList extends Component {
 
     getTaskList() {
         const taskLIs = this.state.tasks.map((task) => 
-            <li className="list-group-item" key={task.id}>
-                <input className="task-item-check" type="checkbox" 
-                    checked={task.done} 
-                    onChange={(e)=>this.toggleTask(task.id, e)}/>
-                <span className="task-item-text">{task.text}</span>
-            </li>
+            // <li className="list-group-item" key={task.id}>
+            //     <input className="task-item-check" type="checkbox" 
+            //         checked={task.done} 
+            //         onChange={(e)=>this.toggleTask(task.id, e)}/>
+            //     <span className="task-item-text">{task.text}</span>
+            // </li>
+            <TodoTask task={task} onTaskComplete={this.toggleTask}></TodoTask>
         )
         return (
             <ul>
@@ -79,11 +81,22 @@ class TodoList extends Component {
         )
     }
 
+    getStatus() {
+        var doneCount = this.state.tasks.reduce((count, task) => {
+            if(task.done) 
+                count++;
+            return count;
+        }, 0);
+        return (
+            <span>{doneCount}/{this.state.tasks.length} are completed </span>
+        )
+    }
+
     render() {
         return (
             <div>
                 <div className="new-task-section">
-                <div className="input-group mb-3">
+                <div className="input-group">
                     <input type="text" className="form-control" ref={this.setTaskInputRef}
                         value={this.state.newTask} 
                         onChange={this.onInputChange}
@@ -93,6 +106,7 @@ class TodoList extends Component {
                     </div>
                 </div>
                 </div>
+                <div className="status-section">{this.getStatus()}</div>
                 <div className="list-section">
                     <div className="list-group list-group-flush task-list-section">
                         {this.getTaskList()}
