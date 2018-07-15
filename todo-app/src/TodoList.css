@@ -13,3 +13,10 @@
 .list-section .task-item-text{
     margin-left: 10px;
 }
+
+.status-section {
+    text-align: left;
+    padding: 5px 30px;
+    font-size: 1.25em;
+    color: grey;
+}
